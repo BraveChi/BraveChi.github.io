@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,爬虫," />
+
+
+
+<!-- 谷歌广告代码 -->
+<!--
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4101638816152412"
+     crossorigin="anonymous"></script>
+-->
+
+
+
+
+
+
+
+
+<meta name="description" content="最近什么最火？非#卡塔尔世界杯#莫属，今日凌晨两场点球大战，巴西败北(我巴西球迷，祝马儿加油吧)，梅西晋级。那么编程如何蹭蹭世界杯的热点呢？先用python爬一些世界杯视频数据看看吧。 分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python抓取B站#卡塔尔 世界杯#的视频数据">
+<meta property="og:url" content="http://bravechi.com/python-wordcup-bili/index.html">
+<meta property="og:site_name" content="BraveChi">
+<meta property="og:description" content="最近什么最火？非#卡塔尔世界杯#莫属，今日凌晨两场点球大战，巴西败北(我巴西球迷，祝马儿加油吧)，梅西晋级。那么编程如何蹭蹭世界杯的热点呢？先用python爬一些世界杯视频数据看看吧。 分析">
+<meta property="og:locale">
+<meta property="og:image" content="https://static001.geekbang.org/infoq/95/956a16ac27906d20ae9f5092975dbcc6.png">
+<meta property="og:image" content="https://static001.geekbang.org/infoq/53/53c36d2f30ee14f674c1d9f40ff9deb3.png">
+<meta property="og:image" content="https://static001.geekbang.org/infoq/59/59d63fc894abb7d415ae3b910c470f29.png">
+<meta property="og:image" content="https://static001.geekbang.org/infoq/3a/3ac49135ca0b9d8e9ba11a5bac27a3b6.png">
+<meta property="article:published_time" content="2022-12-10T11:10:45.000Z">
+<meta property="article:modified_time" content="2023-02-12T14:40:53.545Z">
+<meta property="article:author" content="ShiYong.Qiu">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="爬虫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static001.geekbang.org/infoq/95/956a16ac27906d20ae9f5092975dbcc6.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bravechi.com/python-wordcup-bili/"/>
+
+
+
+
+<meta name="baidu-site-verification" content="code-c17JijWxgR" />
+
+  <title>Python抓取B站#卡塔尔 世界杯#的视频数据 | BraveChi</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5b81ab5d45e91bc182c8925bd735f79f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+      <div class="site-meta-headline">
+        <a >
+          <img class="custom-logo-image" style="width: 120px; height: 120px;" src="/images/custom_logo.png"
+               alt="BraveChi"/>
+        </a>
+      </div>
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BraveChi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">仇士勇的个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-网址">
+          <a href="/daohang/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            网址
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+
+        <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bravechi.com/python-wordcup-bili/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BraveChi">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python抓取B站#卡塔尔 世界杯#的视频数据</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-12-10T19:10:45+08:00">
+                2022-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">编程开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/python-wordcup-bili/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/python-wordcup-bili/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近什么最火？非#卡塔尔世界杯#莫属，今日凌晨两场点球大战，巴西败北(我巴西球迷，祝马儿加油吧)，梅西晋级。那么编程如何蹭蹭世界杯的热点呢？先用python爬一些世界杯视频数据看看吧。</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><span id="more"></span>
+<h3 id="一、步骤"><a href="#一、步骤" class="headerlink" title="一、步骤"></a>一、步骤</h3><ol>
+<li><p>打开B站，在首页输入搜索关键字，点击查询跳转到搜索结果页面<br><img src="https://static001.geekbang.org/infoq/95/956a16ac27906d20ae9f5092975dbcc6.png"></p>
+</li>
+<li><p>读取页面信息，并抓取所需数据，然后点击下一页<br><img src="https://static001.geekbang.org/infoq/53/53c36d2f30ee14f674c1d9f40ff9deb3.png"></p>
+</li>
+<li><p>循环上面过程直至最后一页。</p>
+</li>
+</ol>
+<blockquote>
+<p>数据： 标题、播放量、弹幕数、UP主、发布时间</p>
+</blockquote>
+<h3 id="二、开发技术"><a href="#二、开发技术" class="headerlink" title="二、开发技术"></a>二、开发技术</h3><p>Python + selenium + beautifulsoup + xlwt</p>
+<p>使用命令pip list 检查下面包是否已经安装，没有安装可以使用下面命令进行安装，我的是Pip3</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip3 install selenium==<span class="number">3.8</span><span class="number">.0</span> <span class="comment">## 4.0版本之后不支持plantomJs</span></span><br><span class="line">pip3 install beautifulsoup4</span><br><span class="line">pip3 install lxml</span><br><span class="line">pip3 install xlwt</span><br></pre></td></tr></table></figure>
+
+<p>安装chrome驱动，先查看chrome浏览器版本，找到对应的版本号(最接近自己的)，下载，然后解压到任意目录即可。<br><img src="https://static001.geekbang.org/infoq/59/59d63fc894abb7d415ae3b910c470f29.png"></p>
+<p>chrome驱动下载地址：</p>
+<p><a target="_blank" rel="noopener" href="https://registry.npmmirror.com/binary.html?path=chromedriver/">https://registry.npmmirror.com/binary.html?path=chromedriver/</a></p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><h3 id="1、打开B站"><a href="#1、打开B站" class="headerlink" title="1、打开B站"></a>1、打开B站</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建chrome浏览器驱动</span></span><br><span class="line">driver = webdriver.Chrome(executable_path = <span class="string">&#x27;/Users/warrior/opt/chromedriver&#x27;</span>)</span><br><span class="line"><span class="comment"># 打开网址</span></span><br><span class="line">driver.get(<span class="string">&#x27;https://www.bilibili.com/&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、点击首页搜索并返回页码"><a href="#2、点击首页搜索并返回页码" class="headerlink" title="2、点击首页搜索并返回页码"></a>2、点击首页搜索并返回页码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取得浏览器中的搜索框 并输入查询关键字</span></span><br><span class="line"><span class="built_in">input</span> = WAIT.until(EC.presence_of_element_located((By.XPATH,<span class="string">&quot;//div[@class=&#x27;nav-search-content&#x27;]/input[@class=&#x27;nav-search-input&#x27;]&quot;</span>)))</span><br><span class="line"><span class="built_in">input</span>.send_keys(key_words)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 点击查询按钮</span></span><br><span class="line">submit = WAIT.until(EC.element_to_be_clickable((By.XPATH,<span class="string">&quot;//div[@class=&#x27;nav-search-btn&#x27;]&quot;</span>)))</span><br><span class="line">submit.click()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选中第二个标签页</span></span><br><span class="line">all_h = driver.window_handles</span><br><span class="line">driver.switch_to_window(all_h[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">## 取最大页码</span></span><br><span class="line">maxbtn = WAIT.until(EC.presence_of_element_located((By.XPATH, <span class="string">&quot;//div[@class=&#x27;vui_pagenation--btns&#x27;]//button[last()-1]&quot;</span>)))</span><br><span class="line"><span class="keyword">return</span> <span class="built_in">int</span>(maxbtn.text)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、页面加载并读取"><a href="#3、页面加载并读取" class="headerlink" title="3、页面加载并读取"></a>3、页面加载并读取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 等待页面加载完成(判断是否有下一页按钮)</span></span><br><span class="line">WAIT.until(EC.presence_of_element_located((By.XPATH, <span class="string">&quot;//div[@class=&#x27;vui_pagenation--btns&#x27;]//button[contains(text(), &#x27;下一页&#x27;)]&quot;</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获得页面源代码</span></span><br><span class="line">html = driver.page_source</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、bs获取页面中数据"><a href="#4、bs获取页面中数据" class="headerlink" title="4、bs获取页面中数据"></a>4、bs获取页面中数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(html, <span class="string">&#x27;lxml&#x27;</span>)</span><br><span class="line"><span class="comment"># 得到视频list</span></span><br><span class="line">vidos = soup.find(class_=<span class="string">&#x27;video-list&#x27;</span>).find_all(class_=<span class="string">&#x27;bili-video-card&#x27;</span>)</span><br><span class="line"><span class="comment"># 全局list变量，用于存储抓取的数据</span></span><br><span class="line"><span class="keyword">global</span> vlist</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> vidos:</span><br><span class="line">    <span class="comment"># 取标题</span></span><br><span class="line">    title = item.find(<span class="string">&quot;h3&quot;</span>,class_=<span class="string">&quot;bili-video-card__info--tit&quot;</span>).get(<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">    <span class="comment"># 取视频链接</span></span><br><span class="line">    link = item.find(<span class="string">&quot;a&quot;</span>, class_=<span class="string">&quot;&quot;</span>).get(<span class="string">&#x27;href&#x27;</span>)</span><br><span class="line">    link = <span class="string">&quot;https://&quot;</span> + link</span><br><span class="line">    <span class="comment"># 播放数</span></span><br><span class="line">    view_num = item.find(<span class="string">&quot;span&quot;</span>,class_=<span class="string">&quot;bili-video-card__stats--item&quot;</span>).span.string</span><br><span class="line">    <span class="comment"># 弹幕数</span></span><br><span class="line">    danmu = item.find_all(<span class="string">&quot;span&quot;</span>,class_=<span class="string">&quot;bili-video-card__stats--item&quot;</span>)[<span class="number">1</span>].span.string</span><br><span class="line">    <span class="comment"># UP主</span></span><br><span class="line">    author = item.find(<span class="string">&quot;span&quot;</span>, class_=<span class="string">&quot;bili-video-card__info--author&quot;</span>).string</span><br><span class="line">    <span class="comment"># 日期</span></span><br><span class="line">    datee = item.find(<span class="string">&quot;span&quot;</span>,class_=<span class="string">&quot;bili-video-card__info--date&quot;</span>).string</span><br><span class="line">    datee = datee.strip()[<span class="number">1</span>:]</span><br><span class="line">    <span class="built_in">print</span>(title + <span class="string">&quot; &quot;</span> + link + <span class="string">&quot; &quot;</span> + view_num)</span><br><span class="line">    <span class="comment"># 将数据放入到vlist中</span></span><br><span class="line">    vlist.append([title, link, view_num, danmu, author, datee])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、点击下一页"><a href="#5、点击下一页" class="headerlink" title="5、点击下一页"></a>5、点击下一页</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取得下一页按钮</span></span><br><span class="line">nextbtn = WAIT.until(EC.element_to_be_clickable((By.XPATH, <span class="string">&quot;//div[@class=&#x27;vui_pagenation--btns&#x27;]//button[contains(text(), &#x27;下一页&#x27;)]&quot;</span>)))</span><br><span class="line"><span class="comment"># 点击</span></span><br><span class="line">nextbtn.click()</span><br></pre></td></tr></table></figure>
+
+<h3 id="6、保存数据到Excel"><a href="#6、保存数据到Excel" class="headerlink" title="6、保存数据到Excel"></a>6、保存数据到Excel</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建excel</span></span><br><span class="line">wb = xlwt.Workbook(encoding=<span class="string">&#x27;utf-8&#x27;</span>, style_compression=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">sheet = wb.add_sheet(<span class="string">&#x27;b站搜索结果&#x27;</span>,cell_overwrite_ok=<span class="literal">True</span>)</span><br><span class="line">sheet.write(<span class="number">0</span>,<span class="number">0</span>,<span class="string">&#x27;序号&#x27;</span>)</span><br><span class="line">sheet.write(<span class="number">0</span>,<span class="number">1</span>,<span class="string">&#x27;名称&#x27;</span>)</span><br><span class="line">sheet.write(<span class="number">0</span>,<span class="number">2</span>,<span class="string">&#x27;链接&#x27;</span>)</span><br><span class="line">sheet.write(<span class="number">0</span>,<span class="number">3</span>,<span class="string">&#x27;观看次数&#x27;</span>)</span><br><span class="line">sheet.write(<span class="number">0</span>,<span class="number">4</span>,<span class="string">&#x27;弹幕数&#x27;</span>)</span><br><span class="line">sheet.write(<span class="number">0</span>,<span class="number">5</span>,<span class="string">&#x27;作者&#x27;</span>)</span><br><span class="line">sheet.write(<span class="number">0</span>,<span class="number">6</span>,<span class="string">&#x27;发布时间&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">global</span> index</span><br><span class="line"><span class="comment"># 遍历并且填入数据</span></span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> vlist:</span><br><span class="line">    sheet.write(index, <span class="number">0</span>, index)</span><br><span class="line">    sheet.write(index, <span class="number">1</span>, m[<span class="number">0</span>])</span><br><span class="line">    sheet.write(index, <span class="number">2</span>, m[<span class="number">1</span>])</span><br><span class="line">    sheet.write(index, <span class="number">3</span>, m[<span class="number">2</span>])</span><br><span class="line">    sheet.write(index, <span class="number">4</span>, m[<span class="number">3</span>])</span><br><span class="line">    sheet.write(index, <span class="number">5</span>, m[<span class="number">4</span>])</span><br><span class="line">    sheet.write(index, <span class="number">6</span>, m[<span class="number">5</span>])</span><br><span class="line">    index = index + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存输出Excel 文件</span></span><br><span class="line">wb.save(key_words + <span class="string">&quot;b站搜索结果.xlsx&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="7、入口函数"><a href="#7、入口函数" class="headerlink" title="7、入口函数"></a>7、入口函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">	    <span class="comment"># 打开页面并搜索，返回最大页码</span></span><br><span class="line">        total = first_search(key_words)</span><br><span class="line">        <span class="comment"># 循环</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, total+<span class="number">1</span>):</span><br><span class="line">            <span class="comment"># 点击下一页</span></span><br><span class="line">            next_page(i)</span><br><span class="line">	<span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;异常&quot;</span>)</span><br><span class="line">	<span class="keyword">finally</span>:</span><br><span class="line">        <span class="comment"># 关闭浏览器</span></span><br><span class="line">        driver.close()</span><br><span class="line">    <span class="comment">## 保存数据到Excel</span></span><br><span class="line">    save_to_excel(vlist)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><h3 id="如图"><a href="#如图" class="headerlink" title="如图"></a>如图</h3><p>分别搜索了”卡塔尔 世界杯” 和”梅西 阿根廷”，生成了两个Excel文件，可以修改变量 key_words 检索B站任意数据结果<br><img src="https://static001.geekbang.org/infoq/3a/3ac49135ca0b9d8e9ba11a5bac27a3b6.png"></p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
+<li>主要是XPath取页面元素的问题，取不到页面元素，多检查是否漏(多)括号。</li>
+<li>读不到页面元素，可能是网络加载慢导致的，一：可以time.sleep(1) 1-2秒一下试试；二：重新运行试试。</li>
+<li>B站有反爬机制，UI有可能升级更新，程序报错找不到对应html元素，这个只能事先说明：2022-12-10日的代码</li>
+</ol>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>Github: <a target="_blank" rel="noopener" href="https://github.com/BraveChi/bzscrpy.git">https://github.com/BraveChi/bzscrpy.git</a></p>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><ol>
+<li>WebDriveWait类</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/biggbang/article/details/121511531">selenium 之WebDriveWait类的等待机制</a></p>
+<ol start="2">
+<li>各浏览器驱动下载</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>浏览器</th>
+<th>驱动下载链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chrome</td>
+<td><a target="_blank" rel="noopener" href="https://sites.google.com/a/chromium.org/chromedriver/downloads">https://sites.google.com/a/chromium.org/chromedriver/downloads</a>   <a target="_blank" rel="noopener" href="https://registry.npmmirror.com/binary.html?path=chromedriver/">https://registry.npmmirror.com/binary.html?path=chromedriver/</a></td>
+</tr>
+<tr>
+<td>Edge</td>
+<td><a target="_blank" rel="noopener" href="https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/">https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/</a></td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/mozilla/geckodriver/releases">https://github.com/mozilla/geckodriver/releases</a></td>
+</tr>
+<tr>
+<td>Safari</td>
+<td><a target="_blank" rel="noopener" href="https://webkit.org/blog/6900/webdriver-support-in-safari-10/">https://webkit.org/blog/6900/webdriver-support-in-safari-10/</a></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/read-yjdywj/" rel="next" title="《一句顶一万句》读后感">
+                <i class="fa fa-chevron-left"></i> 《一句顶一万句》读后感
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/football-wc-meixi/" rel="prev" title="世界杯决赛-值得纪念的一战">
+                世界杯决赛-值得纪念的一战 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/BraveChi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:qiushyfm@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/qqwarrior" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.weibo.com/u/1651767627" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/7PWxfmzmA_98yh-8xvrLWg" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=304111251" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://omem.montaigne.io" title="我的备忘" target="_blank">我的备忘</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://bravechi.gitbook.io/ge-li-ri-ji/" title="隔离日记" target="_blank">隔离日记</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+        <div class="site-overview">
+        <!-- adsense 代码注释
+<script>
+window.onload = function() {
+	setTimeout(function() {
+	let script = document.createElement("script");
+	script.setAttribute("async", "");
+	script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+	document.body.appendChild(script);
+	}, 2e3);
+}
+</script>
+
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4101638816152412"
+     data-ad-slot="6870055981"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+-->
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.1.</span> <span class="nav-text">一、步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.</span> <span class="nav-text">二、开发技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">代码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%89%93%E5%BC%80B%E7%AB%99"><span class="nav-number">2.1.</span> <span class="nav-text">1、打开B站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E7%82%B9%E5%87%BB%E9%A6%96%E9%A1%B5%E6%90%9C%E7%B4%A2%E5%B9%B6%E8%BF%94%E5%9B%9E%E9%A1%B5%E7%A0%81"><span class="nav-number">2.2.</span> <span class="nav-text">2、点击首页搜索并返回页码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E5%B9%B6%E8%AF%BB%E5%8F%96"><span class="nav-number">2.3.</span> <span class="nav-text">3、页面加载并读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81bs%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E4%B8%AD%E6%95%B0%E6%8D%AE"><span class="nav-number">2.4.</span> <span class="nav-text">4、bs获取页面中数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E7%82%B9%E5%87%BB%E4%B8%8B%E4%B8%80%E9%A1%B5"><span class="nav-number">2.5.</span> <span class="nav-text">5、点击下一页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E5%88%B0Excel"><span class="nav-number">2.6.</span> <span class="nav-text">6、保存数据到Excel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0"><span class="nav-number">2.7.</span> <span class="nav-text">7、入口函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E5%9B%BE"><span class="nav-number">3.1.</span> <span class="nav-text">如图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PS"><span class="nav-number">5.</span> <span class="nav-text">PS</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2022 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShiYong.Qiu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.0.4/dist/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'vnLSGznCcQEpfpIqzEAjtpLE-MdYXbMMI',
+        appKey: 'c0MQS6X90iLMRk9dzPYs30yw',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
