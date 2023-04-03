@@ -329,8 +329,8 @@
 <p>原文首发于：<a href="https://xie.infoq.cn/article/05f17ff44984baee88a5dc5f3">InfoQ</a></p>
 ]]></content>
       <categories>
-        <category>编程开发</category>
         <category>工作学习</category>
+        <category>编程开发</category>
       </categories>
       <tags>
         <tag>微服务</tag>
@@ -736,7 +736,7 @@
     <url>//update_domains/</url>
     <content><![CDATA[<p>原来的域名 <em>bravechi.com</em> 还有一个月就要到期了，不想再续费了(阿里云注册)，至于原因：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">一是这个域名有点长，不太好记忆；</span><br><span class="line">二是我现在的这个网站也没什么关注度(自己有时候都想不起来)，没有沉没成本。</span><br><span class="line">三是最重要的一个原因，换了一个更便宜点的域名：[soyou.work](https://soyou.work)</span><br></pre></td></tr></table></figure>
-
+<span id="more"></span>
 <p>周末的时候从Godaddy上重新找了这么个非常小众的work域名，图便宜 - 35元。虽然我知道有的网站也有0元域名，但是还是选择了Godaddy这样的大服务商。</p>
 <p>这次选择 <strong>soyou.work</strong> 这个域名,也出于以下几点原因：</p>
 <blockquote>
