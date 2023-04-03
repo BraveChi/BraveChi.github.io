@@ -72,7 +72,7 @@
 <h5 id="其二"><a href="#其二" class="headerlink" title="其二"></a>其二</h5><p>春风杨柳万千条，六亿神州尽舜尧。<br>红雨随心翻作浪，青山着意化为桥。<br>天连五岭银锄落，地动三河铁臂摇。<br>借问瘟君欲何往，纸船明烛照天烧。</p>
 ]]></content>
       <categories>
-        <category>随笔碎想</category>
+        <category>生活感悟</category>
       </categories>
       <tags>
         <tag>生活</tag>
@@ -121,7 +121,7 @@
 <p>在小区溜达了半圈，反正没事，闲着也很好(上个月也一样)，唯希望疫情早日结束，国泰民安，未来能多一些确定性，抬头往上看，周围被楼房林立阻挡的上空是如此的晴朗。</p>
 <img src="https://s3.bmp.ovh/imgs/2022/10/25/5d273553a6a22888.jpeg" style="height:400px; width:auto; text-align:center">]]></content>
       <categories>
-        <category>随笔碎想</category>
+        <category>生活感悟</category>
       </categories>
       <tags>
         <tag>生活</tag>
@@ -156,7 +156,7 @@
 <p>此人很可能就是我老婆。我就不行，焦虑时断时续的，老想以后，无铁饭碗，目前出网店外无赚钱渠道，未来的不确定性及自身经济结构的脆弱性，总是要担心的。<br>封家已8天，目前情势看应还有一周，利用好时间：好好计划一下，把微信收藏清理一下、读几本未读的书、写几篇思考，哪怕写的烂呢？且复盘今年得失，拓展赚钱渠道是当务之急。<br>归零之后，重整代发，相信国家，相信未来。</p>
 ]]></content>
       <categories>
-        <category>工作创业</category>
+        <category>工作学习</category>
       </categories>
       <tags>
         <tag>日记</tag>
@@ -210,7 +210,7 @@
 </ol>
 ]]></content>
       <categories>
-        <category>随笔碎想</category>
+        <category>读书笔记</category>
       </categories>
       <tags>
         <tag>生活</tag>
@@ -276,11 +276,11 @@
 <p>虚惊一场，开始以为是外网服务，被限制访问了。</p>
 ]]></content>
       <categories>
-        <category>编程开发</category>
+        <category>网站建设</category>
       </categories>
       <tags>
         <tag>cloudflare</tag>
-        <tag>本站</tag>
+        <tag>网站</tag>
       </tags>
   </entry>
   <entry>
@@ -330,6 +330,7 @@
 ]]></content>
       <categories>
         <category>编程开发</category>
+        <category>工作学习</category>
       </categories>
       <tags>
         <tag>微服务</tag>
@@ -420,7 +421,7 @@
 </ol>
 ]]></content>
       <categories>
-        <category>编程开发</category>
+        <category>网站建设</category>
       </categories>
       <tags>
         <tag>hexo</tag>
@@ -430,7 +431,7 @@
   </entry>
   <entry>
     <title>GitHub图床CDN加速效果对比测试</title>
-    <url>/2022/11/02/develop/%E8%87%AA%E7%94%A8github%E5%9B%BE%E5%BA%8Acdn%E5%8A%A0%E9%80%9F%E6%95%88%E6%9E%9C%E5%AF%B9%E6%AF%94/</url>
+    <url>//github-cdn-jiasu-compare/</url>
     <content><![CDATA[<h4 id="github图床"><a href="#github图床" class="headerlink" title="github图床"></a>github图床</h4><p>网站文章里面的图片一开始使用的是免费图床，效果还可以，不过还是不太放心(很可能说没就没了)，然后我使用PicGo，配置自己的GitHub仓库作为图床。但是github的国内访问速度真的一言难尽，且很不稳定。</p>
 <span id="more"></span>
 <p><img src="https://cdn.jsdelivr.net/gh/BraveChi/img-bed@main/imgs/PicGoGitHub.png"></p>
@@ -457,7 +458,7 @@
 <p>总结：PicGo配合GitHub配置免费图床，国外的cdn加速，对国外有用，对国内访问有心理安慰作用。</p>
 ]]></content>
       <categories>
-        <category>编程开发</category>
+        <category>网站建设</category>
       </categories>
       <tags>
         <tag>github</tag>
@@ -565,7 +566,7 @@
 <p>感谢梅西，也谢谢儿子！相信你也会成为未来我值得骄傲的人。</p>
 ]]></content>
       <categories>
-        <category>随笔碎想</category>
+        <category>生活感悟</category>
       </categories>
       <tags>
         <tag>生活</tag>
@@ -622,7 +623,7 @@
 <p><img src="https://s2.loli.net/2022/12/24/SwTtyzqucLOGRYN.jpg" alt="2022-12-24-01.jpg"></p>
 ]]></content>
       <categories>
-        <category>随笔碎想</category>
+        <category>读书笔记</category>
       </categories>
       <tags>
         <tag>生活</tag>
@@ -687,7 +688,7 @@
 <p>孩子缺的并不是陪伴，而是父母给他们展现出的表率和提供的价值。</p>
 ]]></content>
       <categories>
-        <category>工作创业</category>
+        <category>生活感悟</category>
       </categories>
       <tags>
         <tag>生活</tag>
@@ -728,6 +729,44 @@
       <tags>
         <tag>oracle</tag>
         <tag>运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>再次更换域名</title>
+    <url>//update_domains/</url>
+    <content><![CDATA[<p>原来的域名 <em>bravechi.com</em> 还有一个月就要到期了，不想再续费了(阿里云注册)，至于原因：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">一是这个域名有点长，不太好记忆；</span><br><span class="line">二是我现在的这个网站也没什么关注度(自己有时候都想不起来)，没有沉没成本。</span><br><span class="line">三是最重要的一个原因，换了一个更便宜点的域名：[soyou.work](https://soyou.work)</span><br></pre></td></tr></table></figure>
+
+<p>周末的时候从Godaddy上重新找了这么个非常小众的work域名，图便宜 - 35元。虽然我知道有的网站也有0元域名，但是还是选择了Godaddy这样的大服务商。</p>
+<p>这次选择 <strong>soyou.work</strong> 这个域名,也出于以下几点原因：</p>
+<blockquote>
+<ol>
+<li>S 和 Y 是我的名字的缩写。</li>
+<li>这次重新选择复出工作(work), 那么我的两个东家，一个是软通isfotstone, 一个是精友jingyou, 那么名字里各取一半: soyou</li>
+<li>so 是如此、所以、这样、确定的意思，you 你/您。 这样的你、如你一样工作、你又工作了，等等含义。</li>
+<li>So you work … </li>
+</ol>
+</blockquote>
+<p>当然我今天突然看到在阿里云注册work域名只要8元的时候，我震惊了，等两个月后再做个域名转移吧！ – 价钱永远是核心价值观。</p>
+<hr>
+<p>最后也对我的个人博客重新做下规划：</p>
+<blockquote>
+<p>将读书笔记从生活读书中拆离出来，并将创业这个目录删掉，放到个人项目当中，新建生活感悟主要写个人总结，日记类的文字直接记在<a href="https://flomoapp.com/">Flomo</a>这样的网络工具里面最好，工作学习，主要记录保险系统学习和项目管理方面的知识分享。最终主要分为下面6个类别：</p>
+</blockquote>
+<ul>
+<li>编程开发</li>
+<li>工作学习</li>
+<li>网站建设</li>
+<li>读书笔记</li>
+<li>个人项目</li>
+<li>生活感悟</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+      </categories>
+      <tags>
+        <tag>网站</tag>
       </tags>
   </entry>
 </search>
