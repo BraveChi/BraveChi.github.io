@@ -769,4 +769,62 @@
         <tag>网站</tag>
       </tags>
   </entry>
+  <entry>
+    <title>编写一个数据库查询的运维小脚本</title>
+    <url>//oracle_restart/</url>
+    <content><![CDATA[<p>昨日晚平台升级，我们成功送BUG上线，今天系统问题又多了起来，大多数时候的运维问题需要根据业务反馈的#订单号# 查询到当前状态，然后再进行反馈和处理。</p>
+<span id="more"></span>
+<p>每次看到运维问题前都要去打开plsql等工具进行数据库查询，或者登录到系统里面进行查看，然后再进行具体的回复和处理。</p>
+<blockquote>
+<p>以上是需求背景</p>
+</blockquote>
+<p>能否写一个程序？实现一步操作把常用的信息都查询出来，省去打开数据库工具和重复编写/修改脚本的繁琐操作。  </p>
+<p>通过查找资料，写了一个，碰到不少问题，特意记录下来。</p>
+<h2 id="技术框架"><a href="#技术框架" class="headerlink" title="技术框架"></a>技术框架</h2><p>开发语言：Python，数据库：oracle，第三方库：cx_Oracle（用于python和oracle的连接），prettytable（用于表格化输出展示数据）</p>
+<h2 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h2><h3 id="一、安装cx-Oracle"><a href="#一、安装cx-Oracle" class="headerlink" title="一、安装cx_Oracle"></a>一、安装cx_Oracle</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install cx_Oracle</span><br></pre></td></tr></table></figure>
+<p>参考官方说明文档：<br><a href="https://cx-oracle.readthedocs.io/en/latest/user_guide/installation.html">https://cx-oracle.readthedocs.io/en/latest/user_guide/installation.html</a></p>
+<h3 id="二、编写数据库操作类"><a href="#二、编写数据库操作类" class="headerlink" title="二、编写数据库操作类"></a>二、编写数据库操作类</h3><p>直接使用了chatgpt提供的代码，因为我只用到了查询方法，所以只查没有增删改，另外考虑到要同时查询多次数据，所以自己修改了实现了一个连接池的功能。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cx_Oracle</span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">OracleDatabase</span>:</span><br><span class="line">    <span class="comment"># 构造函数，传入数据库连接参数</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, user, pwd, dsn, size</span>):</span><br><span class="line">        self.user = user</span><br><span class="line">        self.pwd = pwd</span><br><span class="line">        self.dsn = dsn</span><br><span class="line">        <span class="comment">## 定义连接池</span></span><br><span class="line">        self.size = size</span><br><span class="line">        self.conn_queue = queue.Queue(maxsize=self.size)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.size):</span><br><span class="line">            self.conn_queue.put(self._create_connection())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建数据库连接</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_create_connection</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> cx_Oracle.connect(self.user, self.pwd, self.dsn)</span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 从连接池里面获取连接</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_get_conn</span>(<span class="params">self</span>):</span><br><span class="line">        conn = self.conn_queue.get()</span><br><span class="line">        <span class="keyword">if</span> conn <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self._create_connection()</span><br><span class="line">        <span class="keyword">return</span> conn</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将连接put到连接池中</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_put_conn</span>(<span class="params">self, conn</span>):</span><br><span class="line">        self.conn_queue.put(conn)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 关闭所有连接</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_close_conn</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                conn = self.conn_queue.get_nowait()</span><br><span class="line">                <span class="keyword">if</span> conn:</span><br><span class="line">                    conn.close()</span><br><span class="line">        <span class="keyword">except</span> queue.Empty:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt;&gt;数据库连接全部关闭&lt;&lt;&lt;&lt;&quot;</span>)</span><br><span class="line">            <span class="keyword">pass</span> </span><br><span class="line"></span><br><span class="line">    <span class="comment"># 执行查询语句</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">query</span>(<span class="params">self, sql, params=<span class="literal">None</span></span>):</span><br><span class="line">        res = []</span><br><span class="line">        conn = self._get_conn()</span><br><span class="line">        cursor = conn.cursor()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> params:</span><br><span class="line">                cursor.execute(sql, params)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cursor.execute(sql)</span><br><span class="line">            rows = cursor.fetchall()</span><br><span class="line">            <span class="keyword">for</span> row <span class="keyword">in</span> rows:</span><br><span class="line">                res.append(row)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">str</span>(e))</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            cursor.close()</span><br><span class="line">            self._put_conn(conn)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、输入订单号，执行查询"><a href="#三、输入订单号，执行查询" class="headerlink" title="三、输入订单号，执行查询"></a>三、输入订单号，执行查询</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    user = <span class="string">&quot;user_dba&quot;</span></span><br><span class="line">    pwd = <span class="string">&quot;user_password&quot;</span></span><br><span class="line">    dsn = cx_Oracle.makedsn(<span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="string">&#x27;1521&#x27;</span>, service_name=<span class="string">&#x27;s_demo_db&#x27;</span>)</span><br><span class="line">    db = OracleDatabase(user, pwd, dsn, <span class="number">2</span>)</span><br><span class="line">    cl_code = <span class="built_in">input</span>(<span class="string">&quot;输入订单号: &quot;</span>).strip()</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;数据信息展示:&quot;</span>)</span><br><span class="line">    sql_1 = <span class="string">&quot;&quot;&quot;select *</span></span><br><span class="line"><span class="string">		  from table_demo c</span></span><br><span class="line"><span class="string">		  where c.cl_code = :cl_code&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    results_1 = db.query(sql_1, [cl_code])</span><br><span class="line">	<span class="built_in">print</span>(results_1)</span><br><span class="line">	<span class="comment"># ......</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="四、格式化打印"><a href="#四、格式化打印" class="headerlink" title="四、格式化打印"></a>四、格式化打印</h3><ol>
+<li><strong>安装prettytable</strong><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install PrettyTable</span><br></pre></td></tr></table></figure></li>
+<li><strong>示例代码</strong><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br><span class="line"></span><br><span class="line"><span class="comment">## 接着第三部分的代码</span></span><br><span class="line">tb_1 = PrettyTable([<span class="string">&#x27;**号&#x27;</span>, <span class="string">&#x27;**时间&#x27;</span>, <span class="string">&#x27;当前状态&#x27;</span>, <span class="string">&#x27;单号&#x27;</span>, <span class="string">&#x27;机构&#x27;</span>])</span><br><span class="line"><span class="keyword">for</span> rs_1 <span class="keyword">in</span> results_1:</span><br><span class="line">	tb_1.add_row([rs_1[<span class="number">0</span>], rs_1[<span class="number">1</span>], rs_1[<span class="number">2</span>], rs_1[<span class="number">3</span>], rs_1[<span class="number">4</span>]])</span><br><span class="line"><span class="built_in">print</span>(tb_1)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="五、打印效果"><a href="#五、打印效果" class="headerlink" title="五、打印效果"></a>五、打印效果</h3><p>使用效果如下：粘贴订单号回车，直接返回下面所需要的信息数据(测试数据)：<br><img src="https://s2.loli.net/2023/04/15/HcNDBmyAnIE3wCV.png" alt="效果图"></p>
+<h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><ol>
+<li>第一个问题就是安装 cx_Oracle的时候出错：</li>
+</ol>
+<blockquote>
+<p>ERROR: Could not build wheels for cx_Oracle, which is required to install pyproject.toml-based projects</p>
+</blockquote>
+<p>解决方式：安装Microsoft C++ 生成工具，<a href="https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/">Microsoft C++ 生成工具 - Visual Studio</a>,更改安装目录，按照默认选项安装即可。</p>
+<ol start="2">
+<li>报错信息<blockquote>
+<p>cx_Oracle.DatabaseError: DPI-1047: Cannot locate a 64-bit Oracle Client library:”The specified module could not be found”.See <a href="https://cx-oracle.readthedocs.io/en/latest/user_guide/installation.html">https://cx-oracle.readthedocs.io/en/latest/user_guide/installation.html</a> for help</p>
+</blockquote>
+</li>
+</ol>
+<p>解决方式：复制oracle客户端(客户端下载见问题3)目录中的oci，oraocci11，oraociei11的3个DLL粘贴到你的Paython目录的Lib/site-packages文件夹下面。</p>
+<ol start="3">
+<li>报错信息<blockquote>
+<p>cx_Oracle.DatabaseError: DPI-1072: the Oracle Client library version is unsupported</p>
+</blockquote>
+</li>
+</ol>
+<p>下载oracle客户端，并解压安装。下载地址：<a href="https://oracle.github.io/odpi/doc/installation">https://oracle.github.io/odpi/doc/installation</a><br>我出现这个问题，是因为我本机原来安装的是19.18版本，换成11.2版本的客户端，按照问题2的操作，将三个dll文件重新复制过去，解决问题。<br><img src="https://s2.loli.net/2023/04/15/ZLBE4FIvzSswNuo.png" alt="图二"></p>
+<h2 id="后期优化"><a href="#后期优化" class="headerlink" title="后期优化"></a>后期优化</h2><ol>
+<li>将sql语句集中放到配置文件里面，并配置表头，可以实现多查询自由扩展。</li>
+<li>通过bat脚本调用执行，真正实现一键查询。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
 </search>
