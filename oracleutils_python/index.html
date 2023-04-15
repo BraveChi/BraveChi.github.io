@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://s2.loli.net/2023/04/15/HcNDBmyAnIE3wCV.png">
 <meta property="og:image" content="https://s2.loli.net/2023/04/15/ZLBE4FIvzSswNuo.png">
 <meta property="article:published_time" content="2023-04-15T05:10:45.000Z">
-<meta property="article:modified_time" content="2023-04-15T07:44:44.996Z">
+<meta property="article:modified_time" content="2023-04-15T07:48:26.706Z">
 <meta property="article:author" content="ShiYong">
 <meta property="article:tag" content="oracle">
 <meta property="article:tag" content="python">
@@ -454,24 +454,17 @@
 </ol>
 <h3 id="五、打印效果"><a href="#五、打印效果" class="headerlink" title="五、打印效果"></a>五、打印效果</h3><p>使用效果如下：粘贴订单号回车，直接返回下面所需要的信息数据(测试数据)：<br><img src="https://s2.loli.net/2023/04/15/HcNDBmyAnIE3wCV.png" alt="效果图"></p>
 <h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><ol>
-<li>第一个问题就是安装 cx_Oracle的时候出错：</li>
+<li>第一个问题就是安装 cx_Oracle的时候出错：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Could not build wheels for cx_Oracle, which is required to install pyproject.toml-based projects</span><br></pre></td></tr></table></figure></li>
 </ol>
-<blockquote>
-<p>ERROR: Could not build wheels for cx_Oracle, which is required to install pyproject.toml-based projects</p>
-</blockquote>
 <p>解决方式：安装Microsoft C++ 生成工具，<a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/">Microsoft C++ 生成工具 - Visual Studio</a>,更改安装目录，按照默认选项安装即可。</p>
 <ol start="2">
-<li>报错信息<blockquote>
-<p>cx_Oracle.DatabaseError: DPI-1047: Cannot locate a 64-bit Oracle Client library:”The specified module could not be found”.See <a target="_blank" rel="noopener" href="https://cx-oracle.readthedocs.io/en/latest/user_guide/installation.html">https://cx-oracle.readthedocs.io/en/latest/user_guide/installation.html</a> for help</p>
-</blockquote>
-</li>
+<li>报错信息</li>
 </ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cx_Oracle.DatabaseError: DPI-1047: Cannot locate a 64-bit Oracle Client library:&quot;The specified module could not be found&quot;.See https://cx-oracle.readthedocs.io/en/latest/user_guide/installation.html for help</span><br></pre></td></tr></table></figure>
+
 <p>解决方式：复制oracle客户端(客户端下载见问题3)目录中的oci，oraocci11，oraociei11的3个DLL粘贴到你的Paython目录的Lib/site-packages文件夹下面。</p>
 <ol start="3">
-<li>报错信息<blockquote>
-<p>cx_Oracle.DatabaseError: DPI-1072: the Oracle Client library version is unsupported</p>
-</blockquote>
-</li>
+<li>报错信息<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cx_Oracle.DatabaseError: DPI-1072: the Oracle Client library version is unsupported</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>下载oracle客户端，并解压安装。下载地址：<a target="_blank" rel="noopener" href="https://oracle.github.io/odpi/doc/installation">https://oracle.github.io/odpi/doc/installation</a><br>我出现这个问题，是因为我本机原来安装的是19.18版本，换成11.2版本的客户端，按照问题2的操作，将三个dll文件重新复制过去，解决问题。<br><img src="https://s2.loli.net/2023/04/15/ZLBE4FIvzSswNuo.png" alt="图二"></p>
 <h2 id="后期优化"><a href="#后期优化" class="headerlink" title="后期优化"></a>后期优化</h2><ol>
