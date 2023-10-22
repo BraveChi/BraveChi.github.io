@@ -820,4 +820,29 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>保险知识学习一</title>
+    <url>//policy_study01/</url>
+    <content><![CDATA[<p>2023-10-22(周日) 本周学习了两个行业名词，做个学习笔记。</p>
+<span id="more"></span>
+
+<ul>
+<li><strong>报行合一</strong></li>
+</ul>
+<p>上报和执行要一致，就是指保险公司报给银保监会的手续费(车险佣金)比例和实际执行的要保持一致，保险公司按照规则制定费率，确定和报送手续费的取值范围和使用规则，并按照使用规则来支付手续费。</p>
+<p>银保监会之所以要规定“报行合一”，明确要求保险公司报送商车险手续费率，就是为了整治商业车险行业价格竞争混乱的现象。</p>
+<ul>
+<li><strong>跑、冒、滴、漏，防渗漏系统设计</strong></li>
+</ul>
+<p>理赔渗漏就是指赔款赔超了。</p>
+<p>定损环节的跑冒滴漏</p>
+]]></content>
+      <categories>
+        <category>工作学习</category>
+      </categories>
+      <tags>
+        <tag>工作</tag>
+        <tag>保险系统</tag>
+      </tags>
+  </entry>
 </search>
